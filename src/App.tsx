@@ -16,7 +16,7 @@ const Wrapper = styled.div({
 const initialData: Todo[] = [
   {
     id: uuid(),
-    label: 'Upgrad MacBook to Sonoma',
+    label: 'Upgrade MacBook to Sonoma',
     checked: false,
     visible: false,
     created_at: '2023-09-15T09:15:00.100Z',
