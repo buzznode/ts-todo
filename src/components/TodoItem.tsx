@@ -1,0 +1,75 @@
+import React, { FC, useState } from 'react';
+import styled from '@emotion/styled';
+
+export const Wrapper = styled.label({
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+  borderRadius: 4,
+  marginBottom: 8,
+  padding: 16,
+  background: 'white',
+  fontWeight: '400',
+  fontSize: 14,
+  cursor: 'pointer',
+});
+
+const Label = styled.span<{ checked: boolean }>(({ checked }) => ({
+  textDecoration: checked ? 'line-through' : 'none',
+  fontSize: 20,
+  margin: 0,
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'nowrap',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+}));
+
+const Checkbox = styled.input({
+  width: 16,
+  height: 16,
+  marginRight: 12,
+});
+
+const Delete = styled.span<{ visible: boolean }>(({ visible }) => ({
+  visibility: !visible ? 'hidden' : 'visible',
+  fontSize: 20,
+  margin: 'auto',
+  marginRight: 0,
+}));
+
+export interface TodoItemProps {
+  id: string;
+  label: string;
+  checked?: boolean;
+  visible?: boolean;
+  onChange?: (id: string, checked: boolean) => void;
+  onDelete?: (id: string) => void;
+}
+
+export const TodoItem: FC<TodoItemProps> = ({
+  id,
+  label,
+  checked = false,
+  onChange,
+  onDelete,
+}) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <Wrapper
+      onMouseOver={() => setVisible(true)}
+      onMouseOut={() => setVisible(false)}
+    >
+      <Checkbox
+        type='checkbox'
+        id={id}
+        checked={checked}
+        onChange={(e) => onChange(id, e.target.checked)}
+      />
+      <Label checked={checked}>{label}</Label>
+      <Delete visible={visible} onClick={() => onDelete(id)}>
+        X
+      </Delete>
+    </Wrapper>
+  );
+};
